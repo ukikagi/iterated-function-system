@@ -49,8 +49,8 @@ export const generateSequenceFromIfs = (ifs: number[][], iteration: number) => {
 }
 
 export const rescale = (width: number, height: number, sequence: point[]) => {
-  const xs = sequence.map(([x, y]) => x);
-  const ys = sequence.map(([x, y]) => y);
+  const xs = sequence.map(([x, _]) => x);
+  const ys = sequence.map(([_, y]) => y);
   const [xmin, xmax] = [Math.min(...xs), Math.max(...xs)];
   const [ymin, ymax] = [Math.min(...ys), Math.max(...ys)];
   const scale = Math.max(xmax - xmin, ymax - ymin)

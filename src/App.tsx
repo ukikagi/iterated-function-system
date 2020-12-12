@@ -19,12 +19,10 @@ interface CanvasProps {
 }
 
 const Canvas = (props: CanvasProps) => {
-  const canvasRef = useRef(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    const canvas: HTMLCanvasElement = canvasRef.current!;
-    const context = canvas.getContext('2d')!;
-
+    const context = canvasRef.current!.getContext('2d')!;
     const sequence = generateSequenceFromIfs(props.ifs, props.iteration);
     const imageData = sequenceToImageData(SIZE, SIZE, sequence);
     context.putImageData(imageData, MARGIN, MARGIN);
