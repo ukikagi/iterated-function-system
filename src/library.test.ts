@@ -1,4 +1,4 @@
-import { lowerBound, accumulate, weightedPicker, rescale } from './library'
+import { lowerBound, accumulate, weightedPicker, rescale, parseIfs } from './library'
 import 'jest-extended'
 
 test('test lower_bound', () => {
@@ -26,4 +26,20 @@ test('test weightedPicker', () => {
 
 test('test rescale', () => {
   expect(rescale(101, 101, [[-1, -1], [0, 0], [3, 3]])).toEqual([[0, 0], [25, 25], [100, 100]]);
+})
+
+test('test parseIfs', () => {
+  const ifs_string = `
+  0.00   0.00   0.00  0.16  0.0  0.00   0.01
+  0.85   0.04  -0.04  0.85  0.0  1.60   0.85
+  0.20  -0.26   0.23  0.22  0.0  1.60   0.07
+ -0.15   0.28   0.26  0.24  0.0  0.44   0.07
+ `
+  expect(parseIfs(ifs_string)).toEqual(
+    [[0.00, 0.00, 0.00, 0.16, 0.0, 0.00, 0.01],
+    [0.85, 0.04, -0.04, 0.85, 0.0, 1.60, 0.85],
+    [0.20, -0.26, 0.23, 0.22, 0.0, 1.60, 0.07],
+    [-0.15, 0.28, 0.26, 0.24, 0.0, 0.44, 0.07]
+    ]
+  )
 })

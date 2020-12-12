@@ -53,9 +53,10 @@ export const rescale = (width: number, height: number, sequence: point[]) => {
   const ys = sequence.map(([x, y]) => y);
   const [xmin, xmax] = [Math.min(...xs), Math.max(...xs)];
   const [ymin, ymax] = [Math.min(...ys), Math.max(...ys)];
+  const scale = Math.max(xmax - xmin, ymax - ymin)
   return sequence.map(([x, y]) => [
-    Math.floor((x - xmin) / (xmax - xmin) * (width - 1)),
-    Math.floor((y - ymin) / (ymax - ymin) * (height - 1))
+    Math.floor((x - xmin) / scale * (width - 1)),
+    Math.floor((y - ymin) / scale * (height - 1))
   ]);
 }
 
@@ -66,7 +67,13 @@ export const sequenceToImageData = (width: number, height: number, sequence: poi
     board[y][x] = 1;
   });
   const arr = board.flatMap(row =>
-    row.flatMap(b => [b * 255, b * 255, b * 255, 255])
+    row.flatMap(b => [(1 - b) * 255, (1 - b) * 255, (1 - b) * 255, 255])
   );
   return new ImageData(Uint8ClampedArray.from(arr), width);
+}
+
+export const parseIfs = (input: string) => {
+  return input.split('\n')
+    .map(s => s.split(/[\s,]+/).filter(c => c !== "").map(c => parseFloat(c)))
+    .filter(r => r.length > 0)
 }
