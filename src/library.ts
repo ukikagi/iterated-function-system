@@ -1,3 +1,5 @@
+import { createImageData } from 'canvas';
+
 export const lowerBound = (arr: number[], x: number) => {
   const L = arr.length;
   if (x <= arr[0]) {
@@ -69,7 +71,7 @@ export const sequenceToImageData = (width: number, height: number, sequence: poi
   const arr = board.flatMap(row =>
     row.flatMap(b => [(1 - b) * 255, (1 - b) * 255, (1 - b) * 255, 255])
   );
-  return new ImageData(Uint8ClampedArray.from(arr), width);
+  return createImageData(Uint8ClampedArray.from(arr), width);
 }
 
 export const parseIfs = (input: string) => {
