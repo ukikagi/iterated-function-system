@@ -4,6 +4,7 @@ import {
   weightedPicker,
   rescale,
   parseIfs,
+  operatorNorm,
 } from "./library";
 import "jest-extended";
 
@@ -59,4 +60,8 @@ test("test parseIfs", () => {
     [0.2, -0.26, 0.23, 0.22, 0.0, 1.6, 0.07],
     [-0.15, 0.28, 0.26, 0.24, 0.0, 0.44, 0.07],
   ]);
+});
+
+test("test operatorNorm", () => {
+  expect(operatorNorm([1, 4, 5, 6])).toBeCloseTo(8.68334897643, 5);
 });

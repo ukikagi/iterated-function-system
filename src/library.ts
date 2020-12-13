@@ -93,3 +93,24 @@ export const parseIfs = (input: string) => {
     )
     .filter((r) => r.length > 0);
 };
+
+const largestEigenValueOfPositiveDefinite = ([a, b, c]: number[]) => {
+  const [p, q] = [a + c, a * c - b * b];
+  const D = p ** 2 - 4 * q;
+  console.assert(p > 0 && q > 0 && D >= 0);
+  return (p + Math.sqrt(D)) / 2;
+};
+
+export const operatorNorm = ([a, b, c, d]: number[]) => {
+  const squared = [a ** 2 + b ** 2, a * c + b * d, c ** 2 + d ** 2];
+  const lambda = largestEigenValueOfPositiveDefinite(squared);
+  return Math.sqrt(lambda);
+};
+
+export const generateContractionMap = (norm: number) => {
+  const [a, b, c, d, e, f] = Array(6)
+    .fill(0)
+    .map(() => Math.random() * 2 - 1);
+  const sigma = operatorNorm([a, b, c, d]);
+  return [a, b, c, d].map((x) => (x / sigma) * norm).concat([e, f]);
+};

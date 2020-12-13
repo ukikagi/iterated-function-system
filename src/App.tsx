@@ -4,6 +4,7 @@ import {
   generateSequenceFromIfs,
   sequenceToImageData,
   parseIfs,
+  generateContractionMap
 } from "./library";
 
 const DEFAULT_IFS_STRING = `0.00   0.00   0.00  0.16  0.0  0.00   0.01
@@ -57,6 +58,12 @@ const IfsForm = () => {
     event.preventDefault();
   };
 
+  const handleClick = () => {
+    const params = generateContractionMap(0.5)!.concat([1]);
+    const line = params.map(n => n.toFixed(2)).join("  ");
+    setIfsString(ifsString + "\n" + line);
+  };
+
   return (
     <div>
       <Canvas
@@ -90,6 +97,7 @@ const IfsForm = () => {
         </div>
         <input type="submit" value="Refresh" />
       </form>
+      <button onClick={handleClick}>Add function</button>
     </div>
   );
 };
