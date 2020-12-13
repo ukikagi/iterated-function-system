@@ -1,11 +1,15 @@
-import React, { useState, useRef, useEffect } from 'react';
-import './App.css';
-import { generateSequenceFromIfs, sequenceToImageData, parseIfs } from './library'
+import React, { useState, useRef, useEffect } from "react";
+import "./App.css";
+import {
+  generateSequenceFromIfs,
+  sequenceToImageData,
+  parseIfs,
+} from "./library";
 
 const DEFAULT_IFS_STRING = `0.00   0.00   0.00  0.16  0.0  0.00   0.01
 0.85   0.04  -0.04  0.85  0.0  1.60   0.85
 0.20  -0.26   0.23  0.22  0.0  1.60   0.07
--0.15   0.28   0.26  0.24  0.0  0.44   0.07`
+-0.15   0.28   0.26  0.24  0.0  0.44   0.07`;
 
 const SIZE = 256;
 const MARGIN = 20;
@@ -22,13 +26,13 @@ const Canvas = (props: CanvasProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    const context = canvasRef.current!.getContext('2d')!;
+    const context = canvasRef.current!.getContext("2d")!;
     const sequence = generateSequenceFromIfs(props.ifs, props.iteration);
     const imageData = sequenceToImageData(SIZE, SIZE, sequence);
     context.putImageData(imageData, MARGIN, MARGIN);
   }, [props.ifs]);
   return <canvas ref={canvasRef} {...props} />;
-}
+};
 
 const IfsForm = () => {
   const [ifsString, setIfsString] = useState(DEFAULT_IFS_STRING);
@@ -41,7 +45,9 @@ const IfsForm = () => {
     setIfsString(event.target.value);
   };
 
-  const handleIterationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleIterationChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setIterationString(event.target.value);
   };
 
@@ -64,7 +70,7 @@ const IfsForm = () => {
         <div>
           <label>
             Iteration:
-          <input
+            <input
               type="text"
               value={iterationString}
               onChange={handleIterationChange}
@@ -74,7 +80,7 @@ const IfsForm = () => {
         <div>
           <label>
             IFS:
-          <textarea
+            <textarea
               value={ifsString}
               onChange={handleIfsChange}
               rows={10}
@@ -86,12 +92,10 @@ const IfsForm = () => {
       </form>
     </div>
   );
-}
+};
 
 function App() {
-  return (
-    <IfsForm />
-  );
+  return <IfsForm />;
 }
 
 export default App;
